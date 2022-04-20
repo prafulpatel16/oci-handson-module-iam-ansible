@@ -33,3 +33,16 @@
 - debug:
     msg: "Password of {{ item }} is {{ user_password }}"
   when: creatinguser.changed
+
+- name: Send an email using sendGrid
+  community.general.sendgrid:
+    api_key: "SG.ObgzcCVzRb2RBbWUJo4pwg.0QGsLKs9pURbsXwWVTnMm9GO5wIx07j3ew"
+    from_address: "praful1611@outlook.com"
+    to_addresses:
+      - "{{ item }}{{ domain }}"
+    subject: "OCI - User Created successfully."
+    body: ' Hello "{{ item }}."
+        Welcome to Oracle Cloud.
+        Thanks for choosing OCI "{{ item }}."
+        Please log in using your IAM Credentials. Username: "{{ item }}" & Password:"{{ user_password }}"'
+  delegate_to: localhost
